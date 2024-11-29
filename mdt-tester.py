@@ -87,11 +87,8 @@ if st.button("Analizza"):
                 if not df.empty:
                     st.subheader(f"Dati trovati: {data_type.upper()}")
                     if data_type == 'json-ld':
-                        for index, row in df.iterrows():
-                            st.write(f"**Elemento {index + 1}:**")
-                            for key, value in row.items():
-                                st.markdown(f"**{key}:** {value}")
-                            st.markdown("---")
+                        # Trasponi il DataFrame per visualizzare i dati in verticale
+                        st.dataframe(df.transpose())
                     else:
                         st.dataframe(df)
                 else:
