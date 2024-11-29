@@ -1,4 +1,5 @@
-import streamlit as st
+streamlit
+extructimport streamlit as st
 import requests
 from extruct import extract
 from w3lib.html import get_base_url
@@ -86,29 +87,8 @@ if st.button("Analizza"):
             for data_type, df in results.items():
                 if not df.empty:
                     st.subheader(f"Dati trovati: {data_type.upper()}")
-                    if data_type == 'json-ld':
-                        if '@type' in df.columns:
-                            # Raggruppa per '@type'
-                            grouped = df.groupby('@type')
-                            for group_name, group_df in grouped:
-                                st.write(f"**Tipo: {group_name}**")
-                                for index, row in group_df.iterrows():
-                                    st.write(f"**Elemento {index + 1}:**")
-                                    for key, value in row.items():
-                                        st.markdown(f"**{key}:** {value}")
-                                    st.markdown("---")
-                        else:
-                            # Se '@type' non è presente, visualizza normalmente
-                            for index, row in df.iterrows():
-                                st.write(f"**Elemento {index + 1}:**")
-                                for key, value in row.items():
-                                    st.markdown(f"**{key}:** {value}")
-                                st.markdown("---")
-                    else:
-                        st.dataframe(df)
+                    st.dataframe(df)
                 else:
                     st.warning(f"Nessun dato {data_type.upper()} trovato.")
-        else:
-            st.error("Si è verificato un errore durante l'elaborazione.")
     else:
         st.warning("Per favore, inserisci un URL valido.")
