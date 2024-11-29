@@ -87,8 +87,23 @@ if st.button("Analizza"):
                 if not df.empty:
                     st.subheader(f"Dati trovati: {data_type.upper()}")
                     if data_type == 'json-ld':
-                        # Trasponi il DataFrame per visualizzare i dati in verticale
-                        st.dataframe(df.transpose())
+                        if '@type' in df.columns:
+                            # Raggruppa per '@type'
+                            grouped = df.groupby('@type')
+                            for group_name, group_df in grouped:
+                                st.write(f"**Tipo: {group_name}**")
+                                for index, row in group_df.iterrows():
+                                    st.write(f"**Elemento {index + 1}:**")
+                                    for key, value in row.items():
+                                        st.markdown(f"**{key}:** {value}")
+                                    st.markdown("---")
+                        else:
+                            # Se '@type' non è presente, visualizza normalmente
+                            for index, row in df.iterrows():
+                                st.write(f"**Elemento {index + 1}:**")
+                                for key, value in row.items():
+                                    st.markdown(f"**{key}:** {value}")
+                                st.markdown("---")
                     else:
                         st.dataframe(df)
                 else:
