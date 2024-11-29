@@ -1,5 +1,4 @@
-streamlit
-extruct import streamlit as st
+import streamlit as st
 import requests
 from extruct import extract
 from w3lib.html import get_base_url
@@ -87,8 +86,14 @@ if st.button("Analizza"):
             for data_type, df in results.items():
                 if not df.empty:
                     st.subheader(f"Dati trovati: {data_type.upper()}")
-                    st.dataframe(df)
+                    if data_type == 'json-ld':
+                        # Trasponi il DataFrame per visualizzare i dati in verticale
+                        st.dataframe(df.transpose())
+                    else:
+                        st.dataframe(df)
                 else:
                     st.warning(f"Nessun dato {data_type.upper()} trovato.")
+        else:
+            st.error("Si è verificato un errore durante l'elaborazione.")
     else:
         st.warning("Per favore, inserisci un URL valido.")
