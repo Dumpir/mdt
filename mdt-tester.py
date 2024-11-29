@@ -86,8 +86,17 @@ if st.button("Analizza"):
             for data_type, df in results.items():
                 if not df.empty:
                     st.subheader(f"Dati trovati: {data_type.upper()}")
-                    st.dataframe(df)
+                    if data_type == 'json-ld':
+                        for index, row in df.iterrows():
+                            st.write(f"**Elemento {index + 1}:**")
+                            for key, value in row.items():
+                                st.markdown(f"**{key}:** {value}")
+                            st.markdown("---")
+                    else:
+                        st.dataframe(df)
                 else:
                     st.warning(f"Nessun dato {data_type.upper()} trovato.")
+        else:
+            st.error("Si è verificato un errore durante l'elaborazione.")
     else:
         st.warning("Per favore, inserisci un URL valido.")
