@@ -1,5 +1,5 @@
 streamlit
-extructimport streamlit as st
+extruct import streamlit as st
 import requests
 from extruct import extract
 from w3lib.html import get_base_url
